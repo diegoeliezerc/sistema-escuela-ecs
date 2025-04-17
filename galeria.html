@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería - Escuela Cristiana de Sordos Isaías 29:18</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="img/logo.png" alt="Logo Escuela Isaías 29:18" class="logo-img">
+            </div>
+            <div class="menu-toggle">☰</div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Inicio</a></li>
+                <li><a href="secretaria.html">Secretaría</a></li>
+                <li><a href="docentes.html">Docentes</a></li>
+                <li><a href="supervisores.html">Supervisores</a></li>
+                <li><a href="direccion.html">Dirección</a></li>
+                <li><a href="informes.html">Informes</a></li>
+                <li><a href="galeria.html" class="active">Galería</a></li>
+                <li><a href="ayuda.html">Ayuda</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Galería ECS</h1>
+                <p class="motto">Momentos Internos de la Escuela</p>
+            </div>
+        </section>
+        <section class="content">
+            <h2>Filtrar por Categoría</h2>
+            <form class="form">
+                <div class="form-group">
+                    <label for="categoria-filtro">Categoría:</label>
+                    <select id="categoria-filtro" name="categoria-filtro" onchange="filterGallery()">
+                        <option value="">Todas</option>
+                        <option value="actividades">Actividades</option>
+                        <option value="teatro">Teatros</option>
+                        <option value="curso">Cursos</option>
+                    </select>
+                    </div>
+                </form>
+
+                <div class="gallery">
+                    <div class="gallery-item" data-category="actividades">
+                        <img src="img/galeria/reunion1.jpg" alt="Arte de material">
+                        <p>Arte de material</p>
+                    </div>
+                    <div class="gallery-item" data-category="teatro">
+                        <img src="img/galeria/reunion2.jpg" alt="Participación Drama">
+                        <p>Participación Drama</p>
+                    </div>
+                    <div class="gallery-item" data-category="actividades">
+                        <img src="img/galeria/reunion3.jpg" alt="Aprendizajes Lenguajes de Seña">
+                        <p>Aprendizajes Lenguajes de Seña</p>
+                    </div>
+                    <div class="gallery-item" data-category="curso">
+                        <img src="img/galeria/capacitacion1.jpg" alt="Estudiantes Cursos">
+                        <p>Estudiante Cursos</p>
+                    </div>
+                    <div class="gallery-item" data-category="curso">
+                        <img src="img/galeria/capacitacion2.jpg" alt="Estudiantes las ferías">
+                        <p>Estudiantes las ferías</p>
+                    </div>
+                    <div class="gallery-item" data-category="curso">
+                        <img src="img/galeria/capacitacion3.jpg" alt="Estudiantes Presentaciones">
+                        <p>Estudiantes Presentaciones</p>
+                    </div>
+                    <div class="gallery-item" data-category="curso">
+                        <img src="img/galeria/actividad1.jpg" alt="Estudiantes ayudan las plantas">
+                        <p>Estudiantes ayudan las plantas</p>
+                    </div>
+                    <div class="gallery-item" data-category="teatro">
+                        <img src="img/galeria/actividad2.jpg" alt="Participación Danza">
+                        <p>Participación Danza</p>
+                    </div>
+                    <div class="gallery-item" data-category="actividades">
+                        <img src="img/galeria/actividad3.jpg" alt="los niños dinamica">
+                        <p>los niños dinamica</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>© 2025 Escuela Cristiana de Sordos Isaías 29:18. Hecho con amor e inclusión (Grupo PANDIS).</p>
+        </footer>
+
+        <script>
+            // Menú hamburguesa
+            document.querySelector('.menu-toggle').addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.toggle('active');
+            });
+
+            // Filtrar galería
+            function filterGallery() {
+                const categoriaFiltro = document.getElementById("categoria-filtro").value;
+                const galleryItems = document.querySelectorAll(".gallery-item");
+
+                galleryItems.forEach(item => {
+                    const category = item.getAttribute("data-category");
+                    if (categoriaFiltro === "" || category === categoriaFiltro) {
+                        item.style.display = "block";
+                    } else {
+                        item.style.display = "none";
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

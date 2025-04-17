@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayuda - Escuela Cristiana de Sordos Isaías 29:18</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="img/logo.png" alt="Logo Escuela Isaías 29:18" class="logo-img">
+            </div>
+            <div class="menu-toggle">☰</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="secretaria.html">Secretaría</a></li>
+                <li><a href="docentes.html">Docentes</a></li>
+                <li><a href="supervisores.html">Supervisores</a></li>
+                <li><a href="direccion.html">Dirección</a></li>
+                <li><a href="informes.html">Informes</a></li>
+                <li><a href="galeria.html">Galería</a></li>
+                <li><a href="ayuda.html" class="active">Ayuda</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Ayuda</h1>
+                <p class="motto">Soporte e Información para Usuarios</p>
+            </div>
+        </section>
+        <section class="content">
+            <h2>Preguntas Frecuentes (FAQ)</h2>
+            <div class="faq">
+                <div class="faq-item">
+                    <h3>¿Cómo accedo a las secciones protegidas del sitio?</h3>
+                    <p>Cada sección (Secretaría, Docentes, Supervisores, Dirección, Informes) requiere una contraseña. Si no tiene la contraseña, contacte a la dirección de la escuela.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>¿Qué hago si olvidé la contraseña de mi sección?</h3>
+                    <p>Contacte a la dirección de la escuela para solicitar una nueva contraseña. Por ahora, las contraseñas son gestionadas manualmente.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>¿Puedo registrar a un estudiante desde este sitio?</h3>
+                    <p>Sí, en la sección de Secretaría puede registrar estudiantes e inscribirlos. Necesitará la contraseña de esa sección.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>¿Cómo genero un informe de calificaciones?</h3>
+                    <p>En la sección de Informes, puede generar reportes de estudiantes, calificaciones promedio y asistencia. Seleccione los filtros y haga clic en "Generar Informe".</p>
+                </div>
+            </div>
+
+            <h2>Instrucciones para Usar el Sitio</h2>
+            <div class="instructions">
+                <div class="instruction-item">
+		<h3>Para Secretaría</h3>
+                    <p>En la sección "Secretaría", puede cargar información de los estudiantes y de sus familiares, también puede generaar informes. Use la contraseña proporcionada por la dirección.</p>
+                </div>
+		<div class="instruction-item">
+                    <h3>Para Docentes</h3>
+                    <p>En la sección "Docentes", puede cargar las calificaciones de sus estudiantes. Use la contraseña proporcionada por la dirección.</p>
+                </div>
+                <div class="instruction-item">
+                    <h3>Para Supervisores</h3>
+                    <p>En "Supervisores", puede revisar las calificaciones de los estudiantes y filtrarlas por diferentes criterios. Use la contraseña proporcionada por la dirección.</p>
+                </div>
+                <div class="instruction-item">
+                    <h3>Para Dirección</h3>
+                    <p>En "Dirección", puede gestionar grados, años académicos, docentes y asignaturas. Esta sección es solo para el equipo directivo.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 Escuela Cristiana de Sordos Isaías 29:18. Hecho con amor e inclusión (Grupo PANDIS).</p>
+    </footer>
+
+    <script>
+        // Menú hamburguesa
+        document.querySelector('.menu-toggle').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

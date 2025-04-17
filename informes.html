@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informes - Escuela Cristiana de Sordos Isaías 29:18</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="password-prompt" class="password-overlay">
+        <div class="password-box">
+            <h2>Acceso Restringido</h2>
+            <p>Ingresa la contraseña para acceder a Informes:</p>
+            <input type="password" id="password-input" placeholder="Contraseña">
+            <button onclick="checkPassword()">Ingresar</button>
+            <p id="error-message" class="error" style="display: none;">Contraseña incorrecta. Intenta de nuevo.</p>
+        </div>
+    </div>
+
+    <div id="main-content" style="display: none;">
+        <header>
+            <nav>
+                <div class="logo">
+                    <img src="img/logo.png" alt="Logo Escuela Isaías 29:18" class="logo-img">
+                </div>
+                <div class="menu-toggle">☰</div>
+                <ul class="nav-links">
+    			<li><a href="index.html" class="active">Inicio</a></li>
+    			<li><a href="secretaria.html">Secretaría</a></li>
+    			<li><a href="docentes.html">Docentes</a></li>
+    			<li><a href="supervisores.html">Supervisores</a></li>
+    			<li><a href="direccion.html">Dirección</a></li>
+    			<li><a href="informes.html">Informes</a></li>
+    			<li><a href="galeria.html">Galería</a></li>
+    			<li><a href="ayuda.html">Ayuda</a></li>
+		</ul>
+            </nav>
+        </header>
+        <main>
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Informes</h1>
+                    <p class="motto">Reportes Escolares</p>
+                </div>
+            </section>
+            <section class="content">
+                <h2>Informe de Estudiantes por Grado y Año</h2>
+                <form class="form">
+                    <div class="form-group">
+                        <label for="grado-filtro">Grado:</label>
+                        <select id="grado-filtro" name="grado-filtro">
+                            <option value="">Todos</option>
+                            <option value="Primero">Primero</option>
+                            <option value="Segundo">Segundo</option>
+                            <option value="Tercero">Tercero</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="anio-filtro">Año Escolar:</label>
+                        <select id="anio-filtro" name="anio-filtro">
+                            <option value="">Todos</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                        </select>
+                    </div>
+                    <button type="button" class="submit-btn" onclick="filterStudents()">Generar Informe</button>
+                </form>
+                <table class="table" id="students-table">
+                    <thead>
+                        <tr>
+                            <th>Estudiante</th>
+                            <th>Grado</th>
+                            <th>Año</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Juan Pérez</td>
+                            <td>Primero</td>
+                            <td>2024</td>
+                            <td>Activo</td>
+                        </tr>
+                        <tr>
+                            <td>María López</td>
+                            <td>Segundo</td>
+                            <td>2024</td>
+                            <td>Activo</td>
+                        </tr>
+                        <tr>
+                            <td>Carlos Gómez</td>
+                            <td>Tercero</td>
+                            <td>2023</td>
+                            <td>Inactivo</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Informe de Calificaciones Promedio por Asignatura</h2>
+                <form class="form">
+                    <div class="form-group">
+                        <label for="asignatura-filtro">Asignatura:</label>
+                        <select id="asignatura-filtro" name="asignatura-filtro">
+                            <option value="">Todas</option>
+                            <option value="Matemáticas">Matemáticas</option>
+                            <option value="Lenguaje">Lenguaje</option>
+                            <option value="Ciencias">Ciencias</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="anio-calif-filtro">Año Escolar:</label>
+                        <select id="anio-calif-filtro" name="anio-calif-filtro">
+                            <option value="">Todos</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                        </select>
+                    </div>
+                    <button type="button" class="submit-btn" onclick="filterCalifications()">Generar Informe</button>
+                </form>
+                <table class="table" id="califications-table">
+                    <thead>
+                        <tr>
+                            <th>Asignatura</th>
+                            <th>Año</th>
+                            <th>Promedio</th>
+                            <th>Número de Estudiantes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Matemáticas</td>
+                            <td>2024</td>
+                            <td>90</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Lenguaje</td>
+                            <td>2024</td>
+                            <td>85</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Ciencias</td>
+                            <td>2023</td>
+                            <td>70</td>
+                            <td>1</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Informe de Asistencia (Simulada)</h2>
+                <form class="form">
+                    <div class="form-group">
+                        <label for="estudiante-asist-filtro">Estudiante:</label>
+                        <select id="estudiante-asist-filtro" name="estudiante-asist-filtro">
+                            <option value="">Todos</option>
+                            <option value="Juan Pérez">Juan Pérez</option>
+                            <option value="María López">María López</option>
+                            <option value="Carlos Gómez">Carlos Gómez</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="anio-asist-filtro">Año Escolar:</label>
+                        <select id="anio-asist-filtro" name="anio-asist-filtro">
+                            <option value="">Todos</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                        </select>
+                    </div>
+                    <button type="button" class="submit-btn" onclick="filterAttendance()">Generar Informe</button>
+                </form>
+                <table class="table" id="attendance-table">
+                    <thead>
+                        <tr>
+                            <th>Estudiante</th>
+                            <th>Año</th>
+                            <th>Asistencias</th>
+                            <th>Faltas</th>
+                            <th>Porcentaje de Asistencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Juan Pérez</td>
+                            <td>2024</td>
+                            <td>170</td>
+                            <td>10</td>
+                            <td>94%</td>
+                        </tr>
+                        <tr>
+                            <td>María López</td>
+                            <td>2024</td>
+                            <td>165</td>
+                            <td>15</td>
+                            <td>92%</td>
+                        </tr>
+                        <tr>
+                            <td>Carlos Gómez</td>
+                            <td>2023</td>
+                            <td>160</td>
+                            <td>20</td>
+                            <td>89%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+        <footer>
+            <p>© 2025 Escuela Cristiana de Sordos Isaías 29:18. Hecho con amor e inclusión (Grupo PANDIS).</p>
+        </footer>
+    </div>
+
+    <script>
+        // Contraseña (simulada)
+        const correctPassword = "informes202";
+
+        function checkPassword() {
+            const passwordInput = document.getElementById("password-input").value;
+            const errorMessage = document.getElementById("error-message");
+            const passwordPrompt = document.getElementById("password-prompt");
+            const mainContent = document.getElementById("main-content");
+
+            if (passwordInput === correctPassword) {
+                passwordPrompt.style.display = "none";
+                mainContent.style.display = "block";
+            } else {
+                errorMessage.style.display = "block";
+                document.getElementById("password-input").value = "";
+            }
+        }
+
+        // Permitir ingreso con Enter
+        document.getElementById("password-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                checkPassword();
+            }
+        });
+
+        // Menú hamburguesa
+        document.querySelector('.menu-toggle').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Datos simulados para estudiantes
+        const students = [
+            { estudiante: "Juan Pérez", grado: "Primero", anio: "2024", estado: "Activo" },
+            { estudiante: "María López", grado: "Segundo", anio: "2024", estado: "Activo" },
+            { estudiante: "Carlos Gómez", grado: "Tercero", anio: "2023", estado: "Inactivo" },
+        ];
+
+        function filterStudents() {
+            const gradoFiltro = document.getElementById("grado-filtro").value;
+            const anioFiltro = document.getElementById("anio-filtro").value;
+
+            const filteredStudents = students.filter(student => {
+                return (gradoFiltro === "" || student.grado === gradoFiltro) &&
+                       (anioFiltro === "" || student.anio === anioFiltro);
+            });
+
+            const tbody = document.querySelector("#students-table tbody");
+            tbody.innerHTML = "";
+
+            filteredStudents.forEach(student => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${student.estudiante}</td>
+                    <td>${student.grado}</td>
+                    <td>${student.anio}</td>
+                    <td>${student.estado}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Datos simulados para calificaciones
+        const califications = [
+            { asignatura: "Matemáticas", anio: "2024", promedio: 90, numEstudiantes: 1 },
+            { asignatura: "Lenguaje", anio: "2024", promedio: 85, numEstudiantes: 1 },
+            { asignatura: "Ciencias", anio: "2023", promedio: 70, numEstudiantes: 1 },
+        ];
+
+        function filterCalifications() {
+            const asignaturaFiltro = document.getElementById("asignatura-filtro").value;
+            const anioFiltro = document.getElementById("anio-calif-filtro").value;
+
+            const filteredCalifications = califications.filter(cal => {
+                return (asignaturaFiltro === "" || cal.asignatura === asignaturaFiltro) &&
+                       (anioFiltro === "" || cal.anio === anioFiltro);
+            });
+
+            const tbody = document.querySelector("#califications-table tbody");
+            tbody.innerHTML = "";
+
+            filteredCalifications.forEach(cal => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${cal.asignatura}</td>
+                    <td>${cal.anio}</td>
+                    <td>${cal.promedio}</td>
+                    <td>${cal.numEstudiantes}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Datos simulados para asistencia
+        const attendance = [
+            { estudiante: "Juan Pérez", anio: "2024", asistencias: 170, faltas: 10, porcentaje: 94 },
+            { estudiante: "María López", anio: "2024", asistencias: 165, faltas: 15, porcentaje: 92 },
+            { estudiante: "Carlos Gómez", anio: "2023", asistencias: 160, faltas: 20, porcentaje: 89 },
+        ];
+
+        function filterAttendance() {
+            const estudianteFiltro = document.getElementById("estudiante-asist-filtro").value;
+            const anioFiltro = document.getElementById("anio-asist-filtro").value;
+
+            const filteredAttendance = attendance.filter(record => {
+                return (estudianteFiltro === "" || record.estudiante === estudianteFiltro) &&
+                       (anioFiltro === "" || record.anio === anioFiltro);
+            });
+
+            const tbody = document.querySelector("#attendance-table tbody");
+            tbody.innerHTML = "";
+
+            filteredAttendance.forEach(record => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${record.estudiante}</td>
+                    <td>${record.anio}</td>
+                    <td>${record.asistencias}</td>
+                    <td>${record.faltas}</td>
+                    <td>${record.porcentaje}%</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>

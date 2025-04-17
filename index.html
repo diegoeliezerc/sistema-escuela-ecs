@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escuela Cristiana de Sordos Isaías 29:18</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="img/logo.png" alt="Logo Escuela Isaías 29:18" class="logo-img">
+            </div>
+            <div class="menu-toggle">☰</div>
+            <ul class="nav-links">
+            <li><a href="index.html" class="active">Inicio</a></li>
+            <li><a href="secretaria.html">Secretaría</a></li>
+            <li><a href="docentes.html">Docentes</a></li>
+            <li><a href="supervisores.html">Supervisores</a></li>
+            <li><a href="direccion.html">Dirección</a></li>
+            <li><a href="informes.html">Informes</a></li>
+            <li><a href="galeria.html">Galería</a></li>
+            <li><a href="ayuda.html">Ayuda</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Escuela Cristiana de Sordos Isaías 29:18</h1>
+                <p class="verse">"En aquel día los sordos oirán las palabras del libro..."</p>
+                <p class="motto">Educación con fe e inclusión</p>
+            </div>
+        </section>
+        <section class="values">
+            <h2>Nuestra Esencia</h2>
+            <div class="cards">
+                <div class="card" id="mision">
+                    <h3>Misión</h3>
+                    <p>Formar con amor y valores cristianos a estudiantes sordos, promoviendo su desarrollo integral.</p>
+                </div>
+                <div class="card" id="vision">
+                    <h3>Visión</h3>
+                    <p>Un futuro inclusivo donde cada estudiante alcance su máximo potencial.</p>
+                </div>
+                <div class="card" id="valores">
+                    <h3>Valores</h3>
+                    <p>Fe, inclusión y compromiso con la comunidad.</p>
+                </div>
+            </div>
+            <div class="scroll-buttons">
+                <a href="#mision" class="scroll-btn">Misión</a>
+                <a href="#vision" class="scroll-btn">Visión</a>
+                <a href="#valores" class="scroll-btn">Valores</a>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 Escuela Cristiana de Sordos Isaías 29:18. Hecho con amor e inclusión (Grupo PANDIS).</p>
+    </footer>
+    <script>
+        // Menú hamburguesa
+        document.querySelector('.menu-toggle').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Desplazamiento suave para los botones
+        document.querySelectorAll('.scroll-btn').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                window.scrollTo({
+                    top: targetElement.offsetTop - 60,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

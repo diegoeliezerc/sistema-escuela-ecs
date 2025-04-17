@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supervisores - Escuela Cristiana de Sordos Isaías 29:18</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="password-prompt" class="password-overlay">
+        <div class="password-box">
+            <h2>Acceso Restringido</h2>
+            <p>Ingresa la contraseña para acceder a Supervisores:</p>
+            <input type="password" id="password-input" placeholder="Contraseña">
+            <button onclick="checkPassword()">Ingresar</button>
+            <p id="error-message" class="error" style="display: none;">Contraseña incorrecta. Intenta de nuevo.</p>
+        </div>
+    </div>
+
+    <div id="main-content" style="display: none;">
+        <header>
+            <nav>
+                <div class="logo">
+                    <img src="img/logo.png" alt="Logo Escuela Isaías 29:18" class="logo-img">
+                </div>
+                <div class="menu-toggle">☰</div>
+                <ul class="nav-links">
+    			<li><a href="index.html" class="active">Inicio</a></li>
+    			<li><a href="secretaria.html">Secretaría</a></li>
+    			<li><a href="docentes.html">Docentes</a></li>
+    			<li><a href="supervisores.html">Supervisores</a></li>
+    			<li><a href="direccion.html">Dirección</a></li>
+    			<li><a href="informes.html">Informes</a></li>
+    			<li><a href="galeria.html">Galería</a></li>
+    			<li><a href="ayuda.html">Ayuda</a></li>
+		</ul>
+            </nav>
+        </header>
+        <main>
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Supervisores</h1>
+                    <p class="motto">Revisión de Calificaciones</p>
+                </div>
+            </section>
+            <section class="content">
+                <h2>Filtros de Calificaciones</h2>
+                <form class="form">
+                    <div class="form-group">
+                        <label for="estudiante-filtro">Estudiante:</label>
+                        <select id="estudiante-filtro" name="estudiante-filtro">
+                            <option value="">Todos</option>
+                            <option value="Juan Pérez">Juan Pérez</option>
+                            <option value="María López">María López</option>
+                            <option value="Carlos Gómez">Carlos Gómez</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="anio-filtro">Año Escolar:</label>
+                        <select id="anio-filtro" name="anio-filtro">
+                            <option value="">Todos</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="asignatura-filtro">Asignatura:</label>
+                        <select id="asignatura-filtro" name="asignatura-filtro">
+                            <option value="">Todas</option>
+                            <option value="Matemáticas">Matemáticas</option>
+                            <option value="Lenguaje">Lenguaje</option>
+                            <option value="Ciencias">Ciencias</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="grado-filtro">Grado:</label>
+                        <select id="grado-filtro" name="grado-filtro">
+                            <option value="">Todos</option>
+                            <option value="Primero">Primero</option>
+                            <option value="Segundo">Segundo</option>
+                            <option value="Tercero">Tercero</option>
+                        </select>
+                    </div>
+                    <button type="button" class="submit-btn" onclick="filterCalifications()">Filtrar</button>
+                </form>
+
+                <h2>Calificaciones</h2>
+                <table class="table" id="califications-table">
+                    <thead>
+                        <tr>
+                            <th>Estudiante</th>
+                            <th>Asignatura</th>
+                            <th>Grado</th>
+                            <th>Año</th>
+                            <th>Calificación</th>
+                            <th>Observación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Juan Pérez</td>
+                            <td>Matemáticas</td>
+                            <td>Primero</td>
+                            <td>2024</td>
+                            <td>90</td>
+                            <td>Excelente</td>
+                        </tr>
+                        <tr>
+                            <td>María López</td>
+                            <td>Lenguaje</td>
+                            <td>Segundo</td>
+                            <td>2024</td>
+                            <td>85</td>
+                            <td>Muy bien</td>
+                        </tr>
+                        <tr>
+                            <td>Carlos Gómez</td>
+                            <td>Ciencias</td>
+                            <td>Tercero</td>
+                            <td>2023</td>
+                            <td>70</td>
+                            <td>Debe mejorar</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Resumen de Promedios</h2>
+                <div class="summary">
+                    <p><strong>Promedio General:</strong> 81.67</p>
+                    <p><strong>Número de Estudiantes:</strong> 3</p>
+                    <p><strong>Calificación Más Alta:</strong> 90 (Juan Pérez - Matemáticas)</p>
+                    <p><strong>Calificación Más Baja:</strong> 70 (Carlos Gómez - Ciencias)</p>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>© 2025 Escuela Cristiana de Sordos Isaías 29:18. Hecho con amor e inclusión.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Contraseña (simulada)
+        const correctPassword = "supervisores789";
+
+        function checkPassword() {
+            const passwordInput = document.getElementById("password-input").value;
+            const errorMessage = document.getElementById("error-message");
+            const passwordPrompt = document.getElementById("password-prompt");
+            const mainContent = document.getElementById("main-content");
+
+            if (passwordInput === correctPassword) {
+                passwordPrompt.style.display = "none";
+                mainContent.style.display = "block";
+            } else {
+                errorMessage.style.display = "block";
+                document.getElementById("password-input").value = "";
+            }
+        }
+
+        // Permitir ingreso con Enter
+        document.getElementById("password-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                checkPassword();
+            }
+        });
+
+        // Menú hamburguesa
+        document.querySelector('.menu-toggle').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Datos simulados de calificaciones
+        const califications = [
+            { estudiante: "Juan Pérez", asignatura: "Matemáticas", grado: "Primero", anio: "2024", calificacion: 90, observacion: "Excelente" },
+            { estudiante: "María López", asignatura: "Lenguaje", grado: "Segundo", anio: "2024", calificacion: 85, observacion: "Muy bien" },
+            { estudiante: "Carlos Gómez", asignatura: "Ciencias", grado: "Tercero", anio: "2023", calificacion: 70, observacion: "Debe mejorar" },
+        ];
+
+        function filterCalifications() {
+            const estudianteFiltro = document.getElementById("estudiante-filtro").value;
+            const anioFiltro = document.getElementById("anio-filtro").value;
+            const asignaturaFiltro = document.getElementById("asignatura-filtro").value;
+            const gradoFiltro = document.getElementById("grado-filtro").value;
+
+            const filteredCalifications = califications.filter(cal => {
+                return (estudianteFiltro === "" || cal.estudiante === estudianteFiltro) &&
+                       (anioFiltro === "" || cal.anio === anioFiltro) &&
+                       (asignaturaFiltro === "" || cal.asignatura === asignaturaFiltro) &&
+                       (gradoFiltro === "" || cal.grado === gradoFiltro);
+            });
+
+            const tbody = document.querySelector("#califications-table tbody");
+            tbody.innerHTML = "";
+
+            filteredCalifications.forEach(cal => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${cal.estudiante}</td>
+                    <td>${cal.asignatura}</td>
+                    <td>${cal.grado}</td>
+                    <td>${cal.anio}</td>
+                    <td>${cal.calificacion}</td>
+                    <td>${cal.observacion}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Actualizar resumen (simulado)
+            updateSummary(filteredCalifications);
+        }
+
+        function updateSummary(filteredCalifications) {
+            const summary = document.querySelector(".summary");
+            if (filteredCalifications.length === 0) {
+                summary.innerHTML = "<p>No hay calificaciones para mostrar.</p>";
+                return;
+            }
+
+            const promedio = filteredCalifications.reduce((sum, cal) => sum + cal.calificacion, 0) / filteredCalifications.length;
+            const maxCal = filteredCalifications.reduce((max, cal) => cal.calificacion > max.calificacion ? cal : max, filteredCalifications[0]);
+            const minCal = filteredCalifications.reduce((min, cal) => cal.calificacion < min.calificacion ? cal : min, filteredCalifications[0]);
+
+            summary.innerHTML = `
+                <p><strong>Promedio General:</strong> ${promedio.toFixed(2)}</p>
+                <p><strong>Número de Estudiantes:</strong> ${filteredCalifications.length}</p>
+                <p><strong>Calificación Más Alta:</strong> ${maxCal.calificacion} (${maxCal.estudiante} - ${maxCal.asignatura})</p>
+                <p><strong>Calificación Más Baja:</strong> ${minCal.calificacion} (${minCal.estudiante} - ${minCal.asignatura})</p>
+            `;
+        }
+    </script>
+</body>
+</html>

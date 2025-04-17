@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dirección - Escuela Cristiana de Sordos Isaías 29:18</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="password-prompt" class="password-overlay">
+        <div class="password-box">
+            <h2>Acceso Restringido</h2>
+            <p>Ingresa la contraseña para acceder a Dirección:</p>
+            <input type="password" id="password-input" placeholder="Contraseña">
+            <button onclick="checkPassword()">Ingresar</button>
+            <p id="error-message" class="error" style="display: none;">Contraseña incorrecta. Intenta de nuevo.</p>
+        </div>
+    </div>
+
+    <div id="main-content" style="display: none;">
+        <header>
+            <nav>
+                <div class="logo">
+                    <img src="img/logo.png" alt="Logo Escuela Isaías 29:18" class="logo-img">
+                </div>
+                <div class="menu-toggle">☰</div>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Inicio</a></li>
+                    <li><a href="secretaria.html">Secretaría</a></li>
+                    <li><a href="docentes.html">Docentes</a></li>
+                    <li><a href="supervisores.html">Supervisores</a></li>
+                    <li><a href="direccion.html">Dirección</a></li>
+                    <li><a href="informes.html">Informes</a></li>
+                    <li><a href="galeria.html">Galería</a></li>
+                    <li><a href="ayuda.html">Ayuda</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Dirección</h1>
+                    <p class="motto">Gestión General de la Escuela</p>
+                </div>
+            </section>
+            <section class="content">
+                <h2>Registrar Grado</h2>
+                <form class="form">
+                    <div class="form-group">
+                        <label for="nombre-grado">Nombre del Grado:</label>
+                        <input type="text" id="nombre-grado" name="nombre-grado" placeholder="Ej. Primero">
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion-grado">Descripción:</label>
+                        <textarea id="descripcion-grado" name="descripcion-grado" placeholder="Ej. Primer grado de primaria" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Guardar Grado</button>
+                </form>
+
+                <h2>Grados Registrados</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Primero</td>
+                            <td>Primer grado de primaria</td>
+                        </tr>
+                        <tr>
+                            <td>Segundo</td>
+                            <td>Segundo grado de primaria</td>
+                        </tr>
+                        <tr>
+                            <td>Tercero</td>
+                            <td>Tercer grado de primaria</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Registrar Año Escolar</h2>
+                <form class="form">
+                    <div class="form-group">
+                        <label for="anio-escolar">Año:</label>
+                        <input type="number" id="anio-escolar" name="anio-escolar" placeholder="Ej. 2025">
+                    </div>
+                    <div class="form-group">
+                        <label for="estado-anio">Estado:</label>
+                        <select id="estado-anio" name="estado-anio">
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">Guardar Año</button>
+                </form>
+
+                <h2>Años Escolares Registrados</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Año</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2023</td>
+                            <td>Inactivo</td>
+                        </tr>
+                        <tr>
+                            <td>2024</td>
+                            <td>Activo</td>
+                        </tr>
+                        <tr>
+                            <td>2025</td>
+                            <td>Activo</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Registrar Docente</h2>
+                <form class="form">
+                    <div class="form-group">
+                        <label for="nombre-docente">Nombre:</label>
+                        <input type="text" id="nombre-docente" name="nombre-docente" placeholder="Ej. Ana">
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido-docente">Apellido:</label>
+                        <input type="text" id="apellido-docente" name="apellido-docente" placeholder="Ej. Martínez">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo-docente">Correo:</label>
+                        <input type="email" id="correo-docente" name="correo-docente" placeholder="Ej. ana@escuela.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono-docente">Teléfono:</label>
+                        <input type="tel" id="telefono-docente" name="telefono-docente" placeholder="Ej. 1234567890">
+                    </div>
+                    <button type="submit" class="submit-btn">Guardar Docente</button>
+                </form>
+
+                <h2>Docentes Registrados</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ana</td>
+                            <td>Martínez</td>
+                            <td>ana@escuela.com</td>
+                            <td>1234567890</td>
+                        </tr>
+                        <tr>
+                            <td>Pedro</td>
+                            <td>González</td>
+                            <td>pedro@escuela.com</td>
+                            <td>0987654321</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Registrar Asignatura</h2>
+                <form class="form">
+                    <div class="form-group">
+                        <label for="nombre-asignatura">Nombre:</label>
+                        <input type="text" id="nombre-asignatura" name="nombre-asignatura" placeholder="Ej. Matemáticas">
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion-asignatura">Descripción:</label>
+                        <textarea id="descripcion-asignatura" name="descripcion-asignatura" placeholder="Ej. Matemáticas básicas" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Guardar Asignatura</button>
+                </form>
+
+                <h2>Asignaturas Registradas</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Matemáticas</td>
+                            <td>Matemáticas básicas</td>
+                        </tr>
+                        <tr>
+                            <td>Lenguaje</td>
+                            <td>Lenguaje y comunicación</td>
+                        </tr>
+                        <tr>
+                            <td>Ciencias</td>
+                            <td>Ciencias naturales</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+        <footer>
+            <p>© 2025 Escuela Cristiana de Sordos Isaías 29:18. Hecho con amor e inclusión (Grupo PANDIS).</p>
+        </footer>
+    </div>
+
+    <script>
+        // Contraseña (simulada)
+        const correctPassword = "direccion101"; // Cambia esta contraseña según desees
+
+        function checkPassword() {
+            const passwordInput = document.getElementById("password-input").value;
+            const errorMessage = document.getElementById("error-message");
+            const passwordPrompt = document.getElementById("password-prompt");
+            const mainContent = document.getElementById("main-content");
+
+            if (passwordInput === correctPassword) {
+                passwordPrompt.style.display = "none";
+                mainContent.style.display = "block";
+            } else {
+                errorMessage.style.display = "block";
+                document.getElementById("password-input").value = "";
+            }
+        }
+
+        // Permitir ingreso con Enter
+        document.getElementById("password-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                checkPassword();
+            }
+        });
+
+        // Menú hamburguesa
+        document.querySelector('.menu-toggle').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

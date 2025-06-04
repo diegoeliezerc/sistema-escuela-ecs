@@ -1,0 +1,177 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                    row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                    headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Escuela Cristiana de Sordos Isaías 29:18</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="dashboard__sidebar">
+            <div class="dashboard__sidebar-header">
+                <img src="images/logo.png" alt="Logo Escuela Isaías 29:18" class="dashboard__sidebar-logo">
+                <h2 class="dashboard__sidebar-title">ECS Dashboard</h2>
+            </div>
+            <nav class="dashboard__sidebar-nav">
+                <ul class="dashboard__sidebar-links">
+                    <li><a href="dashboard.html" class="dashboard__sidebar-link dashboard__sidebar-link--active">Dashboard</a></li>
+                    <li class="dashboard__sidebar-item">
+                        <a href="index.html" class="dashboard__sidebar-link">Inicio</a>
+                        <ul class="dashboard__sidebar-sublinks">
+                            <li><a href="quienes-somos.html" class="dashboard__sidebar-sublink">Quiénes Somos</a></li>
+                            <li><a href="servicios.html" class="dashboard__sidebar-sublink">Nuestros Servicios</a></li>
+                            <li><a href="historia.html" class="dashboard__sidebar-sublink">Breve Historia</a></li>
+                            <li><a href="staff.html" class="dashboard__sidebar-sublink">Nuestro Staff</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="secretaria.html" class="dashboard__sidebar-link">Secretaría</a></li>
+                    <li><a href="docentes.html" class="dashboard__sidebar-link">Docentes</a></li>
+                    <li><a href="supervisores.html" class="dashboard__sidebar-link">Supervisores</a></li>
+                    <li><a href="direccion.html" class="dashboard__sidebar-link">Dirección</a></li>
+                    <li><a href="informes.html" class="dashboard__sidebar-link">Informes</a></li>
+                    <li><a href="galeria.html" class="dashboard__sidebar-link">Galería</a></li>
+                    <li><a href="ayuda.html" class="dashboard__sidebar-link">Ayuda</a></li>
+                </ul>
+            </nav>
+            <div class="dashboard__sidebar-toggle">
+                <span>☰</span>
+            </div>
+        </aside>
+        <div class="dashboard__main">
+            <header class="dashboard__header">
+                <h1 class="dashboard__header-title">Panel de Control</h1>
+                <button class="dashboard__header-logout">Cerrar Sesión</button>
+            </header>
+            <main class="dashboard__content">
+                <section class="dashboard__stats">
+                    <div class="dashboard__stat-card">
+                        <h3 class="dashboard__stat-title">Estudiantes Activos</h3>
+                        <p class="dashboard__stat-value">120</p>
+                    </div>
+                    <div class="dashboard__stat-card">
+                        <h3 class="dashboard__stat-title">Inscripciones 2025</h3>
+                        <p class="dashboard__stat-value">85</p>
+                    </div>
+                    <div class="dashboard__stat-card">
+                        <h3 class="dashboard__stat-title">Docentes</h3>
+                        <p class="dashboard__stat-value">15</p>
+                    </div>
+                    <div class="dashboard__stat-card">
+                        <h3 class="dashboard__stat-title">Calif. Promedio</h3>
+                        <p class="dashboard__stat-value">82</p>
+                    </div>
+                    <div class="dashboard__stat-card">
+                        <h3 class="dashboard__stat-title">Promedio General</h3>
+                        <p class="dashboard__stat-value">81.67</p>
+                    </div>
+                    <div class="dashboard__stat-card">
+                        <h3 class="dashboard__stat-title">Certificados Emitidos</h3>
+                        <p class="dashboard__stat-value">45</p>
+                    </div>
+                    <div class="dashboard__stat-card">
+                        <h3 class="dashboard__stat-title">Grados Activos</h3>
+                        <p class="dashboard__stat-value">3</p>
+                    </div>
+                    <div class="dashboard__stat-card">
+                        <h3 class="dashboard__stat-title">Asistencia Promedio</h3>
+                        <p class="dashboard__stat-value">91.67%</p>
+                    </div>
+                    <div class="dashboard__stat-card">
+                        <h3 class="dashboard__stat-title">Fotos en Galería</h3>
+                        <p class="dashboard__stat-value">9</p>
+                    </div>
+                    <div class="dashboard__stat-card">
+                        <h3 class="dashboard__stat-title">Consultas Pendientes</h3>
+                        <p class="dashboard__stat-value">5</p>
+                    </div>
+                </section>
+                <section class="dashboard__chart">
+                    <h2 class="dashboard__chart-title">Distribución de Estudiantes por Grado</h2>
+                    <canvas id="studentChart" class="dashboard__chart-canvas"></canvas>
+                </section>
+                <section class="dashboard__chart">
+                    <h2 class="dashboard__chart-title">Promedio de Calificaciones por Asignatura</h2>
+                    <canvas id="gradesChart" class="dashboard__chart-canvas"></canvas>
+                </section>
+                <section class="dashboard__chart">
+                    <h2 class="dashboard__chart-title">Evolución de Calificaciones por Año</h2>
+                    <canvas id="supervisorChart" class="dashboard__chart-canvas"></canvas>
+                </section>
+                <section class="dashboard__chart">
+                    <h2 class="dashboard__chart-title">Docentes por Asignatura</h2>
+                    <canvas id="directorChart" class="dashboard__chart-canvas"></canvas>
+                </section>
+                <section class="dashboard__chart">
+                    <h2 class="dashboard__chart-title">Porcentaje de Asistencia por Estudiante</h2>
+                    <canvas id="attendanceChart" class="dashboard__chart-canvas"></canvas>
+                </section>
+                <section class="dashboard__chart">
+                    <h2 class="dashboard__chart-title">Fotos por Categoría</h2>
+                    <canvas id="galleryChart" class="dashboard__chart-canvas"></canvas>
+                </section>
+                <section class="dashboard__chart">
+                    <h2 class="dashboard__chart-title">Consultas de Soporte por Categoría</h2>
+                    <canvas id="supportChart" class="dashboard__chart-canvas"></canvas>
+                </section>
+                <section class="dashboard__actions">
+                    <h2 class="dashboard__actions-title">Acciones Rápidas</h2>
+                    <div class="dashboard__actions-buttons">
+                        <a href="secretaria.html" class="dashboard__action-btn">Registrar Estudiante</a>
+                        <a href="secretaria.html#inscribir" class="dashboard__action-btn">Inscribir Estudiante</a>
+                        <a href="docentes.html#cargar-calificacion" class="dashboard__action-btn">Cargar Calificación</a>
+                        <a href="supervisores.html#filtros-calificaciones" class="dashboard__action-btn">Filtrar Calificaciones</a>
+                        <a href="direccion.html#registrar-grado" class="dashboard__action-btn">Registrar Grado</a>
+                        <a href="informes.html#informe-asistencia" class="dashboard__action-btn">Generar Informe de Asistencia</a>
+                        <a href="galeria.html" class="dashboard__action-btn">Ver Galería</a>
+                        <a href="ayuda.html" class="dashboard__action-btn">Contactar Soporte</a>
+                        <a href="secretaria.html#certificado" class="dashboard__action-btn">Generar Certificado</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script src="jsECS/main.js"></script>
+</body>
+</html>

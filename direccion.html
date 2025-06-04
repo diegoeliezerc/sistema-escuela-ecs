@@ -1,248 +1,230 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                    row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                    headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dirección - Escuela Cristiana de Sordos Isaías 29:18</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="./css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="password-prompt" class="password-overlay">
-        <div class="password-box">
-            <h2>Acceso Restringido</h2>
-            <p>Ingresa la contraseña para acceder a Dirección:</p>
-            <input type="password" id="password-input" placeholder="Contraseña">
-            <button onclick="checkPassword()">Ingresar</button>
-            <p id="error-message" class="error" style="display: none;">Contraseña incorrecta. Intenta de nuevo.</p>
+        <div class="password-overlay__box">
+            <h2 class="password-overlay__title">Acceso Restringido</h2>
+            <p class="password-overlay__text">Ingresa la contraseña para acceder a Dirección:</p>
+            <input type="password" id="password-input" class="password-overlay__input" placeholder="Contraseña" data-page="direccion">
+            <button onclick="checkPassword('direccion')" class="password-overlay__button">Ingresar</button>
+            <p id="error-message" class="password-overlay__error" style="display: none;">Contraseña incorrecta. Intenta de nuevo.</p>
         </div>
     </div>
 
-    <div id="main-content" style="display: none;">
-        <header>
-            <nav>
-                <div class="logo">
-                    <img src="img/logo.png" alt="Logo Escuela Isaías 29:18" class="logo-img">
+    <div id="main-content" class="main-content" style="display: none;">
+        <header class="header">
+            <nav class="header__nav">
+                <div class="header__logo">
+                    <img src="./images/logo.png" alt="Logo Escuela Isaías 29:18" class="header__logo-img">
                 </div>
-                <div class="menu-toggle">☰</div>
-                <ul class="nav-links">
-                    <li><a href="index.html" class="active">Inicio</a></li>
-                    <li><a href="secretaria.html">Secretaría</a></li>
-                    <li><a href="docentes.html">Docentes</a></li>
-                    <li><a href="supervisores.html">Supervisores</a></li>
-                    <li><a href="direccion.html">Dirección</a></li>
-                    <li><a href="informes.html">Informes</a></li>
-                    <li><a href="galeria.html">Galería</a></li>
-                    <li><a href="ayuda.html">Ayuda</a></li>
+                <div class="header__menu-toggle">☰</div>
+                <ul class="header__nav-links">
+                    <li class="header__nav-item">
+                        <a href="index.html" class="header__nav-link">Inicio</a>
+                        <ul class="header__nav-sublinks">
+                            <li><a href="quienes-somos.html" class="header__nav-sublink">Quiénes Somos</a></li>
+                            <li><a href="servicios.html" class="header__nav-sublink">Nuestros Servicios</a></li>
+                            <li><a href="historia.html" class="header__nav-sublink">Breve Historia</a></li>
+                            <li><a href="staff.html" class="header__nav-sublink">Nuestro Staff</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="secretaria.html" class="header__nav-link">Secretaría</a></li>
+                    <li><a href="docentes.html" class="header__nav-link">Docentes</a></li>
+                    <li><a href="supervisores.html" class="header__nav-link">Supervisores</a></li>
+                    <li><a href="direccion.html" class="header__nav-link header__nav-link--active">Dirección</a></li>
+                    <li><a href="informes.html" class="header__nav-link">Informes</a></li>
+                    <li><a href="galeria.html" class="header__nav-link">Galería</a></li>
+                    <li><a href="ayuda.html" class="header__nav-link">Ayuda</a></li>
+                    <li><a href="dashboard.html" class="header__nav-link">Panel de Control</a></li>
                 </ul>
             </nav>
         </header>
-        <main>
+        <main class="main">
             <section class="hero">
-                <div class="hero-content">
-                    <h1>Dirección</h1>
-                    <p class="motto">Gestión General de la Escuela</p>
+                <div class="hero__content">
+                    <h1 class="hero__title">Dirección</h1>
+                    <p class="hero__motto">Gestión Administrativa y Asignación de Credenciales</p>
                 </div>
             </section>
             <section class="content">
-                <h2>Registrar Grado</h2>
-                <form class="form">
-                    <div class="form-group">
-                        <label for="nombre-grado">Nombre del Grado:</label>
-                        <input type="text" id="nombre-grado" name="nombre-grado" placeholder="Ej. Primero">
-                    </div>
-                    <div class="form-group">
-                        <label for="descripcion-grado">Descripción:</label>
-                        <textarea id="descripcion-grado" name="descripcion-grado" placeholder="Ej. Primer grado de primaria" rows="3"></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Guardar Grado</button>
-                </form>
-
-                <h2>Grados Registrados</h2>
-                <table class="table">
+                <!-- Gestión de Grados -->
+                <h2 class="content__title">Gestión de Grados</h2>
+                <div class="form">
+                    <h3 class="form__title">Registrar/Editar Grado</h3>
+                    <form id="grade-form" class="form__group">
+                        <div class="form__group">
+                            <label for="nombre-grado" class="form__group-label">Nombre del Grado:</label>
+                            <input type="text" id="nombre-grado" name="nombre-grado" class="form__group-input" required>
+                        </div>
+                        <button type="submit" class="form__submit-btn">Guardar Grado</button>
+                    </form>
+                </div>
+                <div class="form__group">
+                    <label for="search-grade" class="form__group-label">Buscar Grado:</label>
+                    <input type="text" id="search-grade" class="form__group-input" placeholder="Nombre del grado">
+                </div>
+                <table id="grade-table" class="table">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
+                            <th class="table__th">ID</th>
+                            <th class="table__th">Nombre</th>
+                            <th class="table__th">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Primero</td>
-                            <td>Primer grado de primaria</td>
-                        </tr>
-                        <tr>
-                            <td>Segundo</td>
-                            <td>Segundo grado de primaria</td>
-                        </tr>
-                        <tr>
-                            <td>Tercero</td>
-                            <td>Tercer grado de primaria</td>
-                        </tr>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
 
-                <h2>Registrar Año Escolar</h2>
-                <form class="form">
-                    <div class="form-group">
-                        <label for="anio-escolar">Año:</label>
-                        <input type="number" id="anio-escolar" name="anio-escolar" placeholder="Ej. 2025">
-                    </div>
-                    <div class="form-group">
-                        <label for="estado-anio">Estado:</label>
-                        <select id="estado-anio" name="estado-anio">
-                            <option value="Activo">Activo</option>
-                            <option value="Inactivo">Inactivo</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="submit-btn">Guardar Año</button>
-                </form>
-
-                <h2>Años Escolares Registrados</h2>
-                <table class="table">
+                <!-- Gestión de Años Escolares -->
+                <h2 class="content__title">Gestión de Años Escolares</h2>
+                <div class="form">
+                    <h3 class="form__title">Registrar/Editar Año Escolar</h3>
+                    <form id="year-form" class="form__group">
+                        <div class="form__group">
+                            <label for="anio-escolar" class="form__group-label">Año:</label>
+                            <input type="text" id="anio-escolar" name="anio-escolar" class="form__group-input" pattern="\d{4}" placeholder="Ej. 2024" required>
+                        </div>
+                        <button type="submit" class="form__submit-btn">Guardar Año</button>
+                    </form>
+                </div>
+                <div class="form__group">
+                    <label for="search-year" class="form__group-label">Buscar Año:</label>
+                    <input type="text" id="search-year" class="form__group-input" placeholder="Año escolar">
+                </div>
+                <table id="year-table" class="table">
                     <thead>
                         <tr>
-                            <th>Año</th>
-                            <th>Estado</th>
+                            <th class="table__th">ID</th>
+                            <th class="table__th">Año</th>
+                            <th class="table__th">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>2023</td>
-                            <td>Inactivo</td>
-                        </tr>
-                        <tr>
-                            <td>2024</td>
-                            <td>Activo</td>
-                        </tr>
-                        <tr>
-                            <td>2025</td>
-                            <td>Activo</td>
-                        </tr>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
 
-                <h2>Registrar Docente</h2>
-                <form class="form">
-                    <div class="form-group">
-                        <label for="nombre-docente">Nombre:</label>
-                        <input type="text" id="nombre-docente" name="nombre-docente" placeholder="Ej. Ana">
-                    </div>
-                    <div class="form-group">
-                        <label for="apellido-docente">Apellido:</label>
-                        <input type="text" id="apellido-docente" name="apellido-docente" placeholder="Ej. Martínez">
-                    </div>
-                    <div class="form-group">
-                        <label for="correo-docente">Correo:</label>
-                        <input type="email" id="correo-docente" name="correo-docente" placeholder="Ej. ana@escuela.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="telefono-docente">Teléfono:</label>
-                        <input type="tel" id="telefono-docente" name="telefono-docente" placeholder="Ej. 1234567890">
-                    </div>
-                    <button type="submit" class="submit-btn">Guardar Docente</button>
-                </form>
-
-                <h2>Docentes Registrados</h2>
-                <table class="table">
+                <!-- Gestión de Docentes -->
+                <h2 class="content__title">Gestión de Docentes</h2>
+                <div class="form">
+                    <h3 class="form__title">Registrar/Editar Docente</h3>
+                    <form id="teacher-form" class="form__group">
+                        <div class="form__group">
+                            <label for="nombre-docente" class="form__group-label">Nombre:</label>
+                            <input type="text" id="nombre-docente" name="nombre-docente" class="form__group-input" required>
+                        </div>
+                        <div class="form__group">
+                            <label for="apellido-docente" class="form__group-label">Apellido:</label>
+                            <input type="text" id="apellido-docente" name="apellido-docente" class="form__group-input" required>
+                        </div>
+                        <div class="form__group">
+                            <label for="cedula-docente" class="form__group-label">Cédula:</label>
+                            <input type="text" id="cedula-docente" name="cedula-docente" class="form__group-input" required>
+                        </div>
+                        <div class="form__group">
+                            <label for="correo-docente" class="form__group-label">Correo:</label>
+                            <input type="email" id="correo-docente" name="correo-docente" class="form__group-input">
+                        </div>
+                        <div class="form__group">
+                            <label for="contrasena-docente" class="form__group-label">Contraseña:</label>
+                            <input type="password" id="contrasena-docente" name="contrasena-docente" class="form__group-input" required>
+                        </div>
+                        <button type="submit" class="form__submit-btn">Guardar Docente</button>
+                    </form>
+                </div>
+                <div class="form__group">
+                    <label for="search-teacher" class="form__group-label">Buscar Docente:</label>
+                    <input type="text" id="search-teacher" class="form__group-input" placeholder="Nombre, apellido o cédula">
+                </div>
+                <table id="teacher-table" class="table">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Correo</th>
-                            <th>Teléfono</th>
+                            <th class="table__th">ID</th>
+                            <th class="table__th">Nombre</th>
+                            <th class="table__th">Apellido</th>
+                            <th class="table__th">Cédula</th>
+                            <th class="table__th">Correo</th>
+                            <th class="table__th">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Ana</td>
-                            <td>Martínez</td>
-                            <td>ana@escuela.com</td>
-                            <td>1234567890</td>
-                        </tr>
-                        <tr>
-                            <td>Pedro</td>
-                            <td>González</td>
-                            <td>pedro@escuela.com</td>
-                            <td>0987654321</td>
-                        </tr>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
 
-                <h2>Registrar Asignatura</h2>
-                <form class="form">
-                    <div class="form-group">
-                        <label for="nombre-asignatura">Nombre:</label>
-                        <input type="text" id="nombre-asignatura" name="nombre-asignatura" placeholder="Ej. Matemáticas">
-                    </div>
-                    <div class="form-group">
-                        <label for="descripcion-asignatura">Descripción:</label>
-                        <textarea id="descripcion-asignatura" name="descripcion-asignatura" placeholder="Ej. Matemáticas básicas" rows="3"></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Guardar Asignatura</button>
-                </form>
-
-                <h2>Asignaturas Registradas</h2>
-                <table class="table">
+                <!-- Gestión de Asignaturas -->
+                <h2 class="content__title">Gestión de Asignaturas</h2>
+                <div class="form">
+                    <h3 class="form__title">Registrar/Editar Asignatura</h3>
+                    <form id="subject-form" class="form__group">
+                        <div class="form__group">
+                            <label for="nombre-asignatura" class="form__group-label">Nombre:</label>
+                            <input type="text" id="nombre-asignatura" name="nombre-asignatura" class="form__group-input" required>
+                        </div>
+                        <button type="submit" class="form__submit-btn">Guardar Asignatura</button>
+                    </form>
+                </div>
+                <div class="form__group">
+                    <label for="search-subject" class="form__group-label">Buscar Asignatura:</label>
+                    <input type="text" id="search-subject" class="form__group-input" placeholder="Nombre de la asignatura">
+                </div>
+                <table id="subject-table" class="table">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
+                            <th class="table__th">ID</th>
+                            <th class="table__th">Nombre</th>
+                            <th class="table__th">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Matemáticas</td>
-                            <td>Matemáticas básicas</td>
-                        </tr>
-                        <tr>
-                            <td>Lenguaje</td>
-                            <td>Lenguaje y comunicación</td>
-                        </tr>
-                        <tr>
-                            <td>Ciencias</td>
-                            <td>Ciencias naturales</td>
-                        </tr>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </section>
         </main>
-        <footer>
-            <p>© 2025 Escuela Cristiana de Sordos Isaías 29:18. Hecho con amor e inclusión (Grupo PANDIS).</p>
+        <footer class="footer">
+            <p class="footer__text">© 2025 Escuela Cristiana de Sordos Isaías 29:18. Hecho con amor e inclusión.</p>
         </footer>
     </div>
-
-    <script>
-        // Contraseña (simulada)
-        const correctPassword = "direccion101"; // Cambia esta contraseña según desees
-
-        function checkPassword() {
-            const passwordInput = document.getElementById("password-input").value;
-            const errorMessage = document.getElementById("error-message");
-            const passwordPrompt = document.getElementById("password-prompt");
-            const mainContent = document.getElementById("main-content");
-
-            if (passwordInput === correctPassword) {
-                passwordPrompt.style.display = "none";
-                mainContent.style.display = "block";
-            } else {
-                errorMessage.style.display = "block";
-                document.getElementById("password-input").value = "";
-            }
-        }
-
-        // Permitir ingreso con Enter
-        document.getElementById("password-input").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                checkPassword();
-            }
-        });
-
-        // Menú hamburguesa
-        document.querySelector('.menu-toggle').addEventListener('click', () => {
-            document.querySelector('.nav-links').classList.toggle('active');
-        });
-    </script>
+    <script src="./jsECS/main.js"></script>
 </body>
 </html>

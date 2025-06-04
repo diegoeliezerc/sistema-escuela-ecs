@@ -1,0 +1,107 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                    row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                    headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiénes Somos - Escuela Cristiana de Sordos Isaías</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="header__nav">
+            <div class="header__logo">
+                <img src="images/logo.png" alt="Logo Escuela Isaías 29:18" class="header__logo-img">
+            </div>
+            <div class="header__menu-toggle">☰</div>
+            <ul class="header__nav-links">
+                <li class="header__nav-item">
+                    <a href="index.html" class="header__nav-link">Inicio</a>
+                    <ul class="header__nav-sublinks">
+                        <li><a href="quienes-somos.html" class="header__nav-sublink header__nav-sublink--active">Quiénes Somos</a></li>
+                        <li><a href="servicios.html" class="header__nav-sublink">Nuestros Servicios</a></li>
+                        <li><a href="historia.html" class="header__nav-sublink">Breve Historia</a></li>
+                        <li><a href="staff.html" class="header__nav-sublink">Nuestro Staff</a></li>
+                    </ul>
+                </li>
+                <li><a href="secretaria.html" class="header__nav-link">Secretaría</a></li>
+                <li><a href="docentes.html" class="header__nav-link">Docentes</a></li>
+                <li><a href="supervisores.html" class="header__nav-link">Supervisores</a></li>
+                <li><a href="direccion.html" class="header__nav-link">Dirección</a></li>
+                <li><a href="informes.html" class="header__nav-link">Informes</a></li>
+                <li><a href="galeria.html" class="header__nav-link">Galería</a></li>
+                <li><a href="ayuda.html" class="header__nav-link">Ayuda</a></li>
+                <li><a href="dashboard.html" class="header__nav-link">Panel de Control</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="main">
+        <section class="hero">
+            <div class="hero__content">
+                <h1 class="hero__title">Quiénes Somos</h1>
+                <p class="hero__motto">Comprometidos con la educación inclusiva y los valores cristianos</p>
+            </div>
+        </section>
+        <section class="content">
+            <h2 class="content__title">Nuestra Identidad</h2>
+            <div class="values__cards">
+                <div class="values__card">
+                    <h3 class="values__card-title">Misión</h3>
+                    <p class="values__card-text">Formar con amor y valores cristianos a estudiantes sordos, promoviendo su desarrollo integral.</p>
+                </div>
+                <div class="values__card">
+                    <h3 class="values__card-title">Visión</h3>
+                    <p class="values__card-text">Un futuro inclusivo donde cada estudiante alcance su máximo potencial.</p>
+                </div>
+                <div class="values__card">
+                    <h3 class="values__card-title">Valores</h3>
+                    <p class="values__card-text">Fe, inclusión y compromiso con la comunidad.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <p class="footer__text">© 2025 Escuela Cristiana de Sordos Isaías 29:18. Hecho con amor e inclusión.</p>
+    </footer>
+    <script src="jsECS/main.js"></script>
+</body>
+</html>

@@ -42,7 +42,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería - Escuela Cristiana de Sordos Isaías 29:18</title>
+    <title>Breve Historia - Escuela Cristiana de Sordos Isaías 29:18</title>
     <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -59,7 +59,7 @@
                     <ul class="header__nav-sublinks">
                         <li><a href="quienes-somos.html" class="header__nav-sublink">Quiénes Somos</a></li>
                         <li><a href="servicios.html" class="header__nav-sublink">Nuestros Servicios</a></li>
-                        <li><a href="historia.html" class="header__nav-sublink">Breve Historia</a></li>
+                        <li><a href="historia.html" class="header__nav-sublink header__nav-sublink--active">Breve Historia</a></li>
                         <li><a href="staff.html" class="header__nav-sublink">Nuestro Staff</a></li>
                     </ul>
                 </li>
@@ -68,7 +68,7 @@
                 <li><a href="supervisores.html" class="header__nav-link">Supervisores</a></li>
                 <li><a href="direccion.html" class="header__nav-link">Dirección</a></li>
                 <li><a href="informes.html" class="header__nav-link">Informes</a></li>
-                <li><a href="galeria.html" class="header__nav-link header__nav-link--active">Galería</a></li>
+                <li><a href="galeria.html" class="header__nav-link">Galería</a></li>
                 <li><a href="ayuda.html" class="header__nav-link">Ayuda</a></li>
                 <li><a href="dashboard.html" class="header__nav-link">Panel de Control</a></li>
             </ul>
@@ -77,63 +77,13 @@
     <main class="main">
         <section class="hero">
             <div class="hero__content">
-                <h1 class="hero__title">Galería ECS</h1>
-                <p class="hero__motto">Momentos Internos de la Escuela</p>
+                <h1 class="hero__title">Breve Historia</h1>
+                <p class="hero__motto">Un legado de fe e inclusión</p>
             </div>
         </section>
         <section class="content">
-            <h2 class="content__title">Filtrar por Categoría</h2>
-            <form class="form">
-                <div class="form__group">
-                    <label for="categoria-filtro" class="form__group-label">Categoría:</label>
-                    <select id="categoria-filtro" name="categoria-filtro" class="form__group-select" onchange="filterGallery()">
-                        <option value="">Todas</option>
-                        <option value="actividades">Actividades</option>
-                        <option value="teatros">Teatros</option>
-                        <option value="cursos">Cursos</option>
-                    </select>
-                </div>
-                <!-- Comentario: Opcional, enviar a /api/galeria con Flask para obtener imágenes desde Azure SQL -->
-            </form>
-
-            <div class="gallery">
-                <div class="gallery__item" data-category="actividades">
-                    <img src="images/galeria/reunion1.jpg" alt="Arte de material" class="gallery__item-img">
-                    <p class="gallery__item-text">Arte de material</p>
-                </div>
-                <div class="gallery__item" data-category="teatros">
-                    <img src="images/galeria/reunion2.jpg" alt="Participación Drama" class="gallery__item-img">
-                    <p class="gallery__item-text">Participación Drama</p>
-                </div>
-                <div class="gallery__item" data-category="actividades">
-                    <img src="images/galeria/reunion3.jpg" alt="Aprendizajes Lenguajes de Seña" class="gallery__item-img">
-                    <p class="gallery__item-text">Aprendizajes Lenguajes de Seña</p>
-                </div>
-                <div class="gallery__item" data-category="cursos">
-                    <img src="images/galeria/capacitacion1.jpg" alt="Estudiante Cursos" class="gallery__item-img">
-                    <p class="gallery__item-text">Estudiante Cursos</p>
-                </div>
-                <div class="gallery__item" data-category="cursos">
-                    <img src="images/galeria/capacitacion2.jpg" alt="Estudiantes las ferías" class="gallery__item-img">
-                    <p class="gallery__item-text">Estudiantes las ferías</p>
-                </div>
-                <div class="gallery__item" data-category="cursos">
-                    <img src="images/galeria/capacitacion3.jpg" alt="Estudiantes Presentaciones" class="gallery__item-img">
-                    <p class="gallery__item-text">Estudiantes Presentaciones</p>
-                </div>
-                <div class="gallery__item" data-category="cursos">
-                    <img src="images/galeria/actividad1.jpg" alt="Estudiantes ayudan las plantas" class="gallery__item-img">
-                    <p class="gallery__item-text">Estudiantes ayudan las plantas</p>
-                </div>
-                <div class="gallery__item" data-category="teatros">
-                    <img src="images/galeria/actividad2.jpg" alt="Participación Danza" class="gallery__item-img">
-                    <p class="gallery__item-text">Participación Danza</p>
-                </div>
-                <div class="gallery__item" data-category="actividades">
-                    <img src="images/galeria/actividad3.jpg" alt="Los niños dinamica" class="gallery__item-img">
-                    <p class="gallery__item-text">Los niños dinamica</p>
-                </div>
-            </div>
+            <h2 class="content__title">Nuestra Fundación</h2>
+            <p class="content__text">La Escuela Cristiana de Sordos Isaías 29:18 fue fundada en 1990 por un grupo de líderes cristianos comprometidos con la educación inclusiva. Inspirados por el versículo bíblico "En aquel día los sordos oirán las palabras del libro..." (Isaías 29:18), nuestro objetivo fue crear un espacio donde los estudiantes sordos pudieran recibir una educación de calidad, basada en valores cristianos. Desde entonces, hemos crecido, impactando vidas y construyendo una comunidad de fe, aprendizaje y amor.</p>
         </section>
     </main>
     <footer class="footer">

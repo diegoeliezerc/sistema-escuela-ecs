@@ -1,163 +1,212 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                    row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                    headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><script type="text/javascript">
+    var gk_isXlsx = false;
+    var gk_xlsxFileLookup = {};
+    var gk_fileData = {};
+    function filledCell(cell) {
+        return cell !== '' && cell != null;
+    }
+    function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                    row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                    headerRowIndex = 0;
+                }
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+    }
+</script>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Docentes - Escuela Cristiana de Sordos Isaías 29:18</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="./css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="password-prompt" class="password-overlay">
-        <div class="password-box">
-            <h2>Acceso Restringido</h2>
-            <p>Ingresa la contraseña para acceder a Docentes:</p>
-            <input type="password" id="password-input" placeholder="Contraseña">
-            <button onclick="checkPassword()">Ingresar</button>
-            <p id="error-message" class="error" style="display: none;">Contraseña incorrecta. Intenta de nuevo.</p>
+        <div class="password-overlay__box">
+            <h2 class="password-overlay__title">Acceso Restringido</h2>
+            <p class="password-overlay__text">Ingresa la contraseña para acceder a Docentes:</p>
+            <input type="password" id="password-input" class="password-overlay__input" placeholder="Contraseña" data-page="docentes">
+            <button onclick="checkPassword('docentes')" class="password-overlay__button">Ingresar</button>
+            <p id="error-message" class="password-overlay__error" style="display: none;">Contraseña incorrecta. Intenta de nuevo.</p>
         </div>
     </div>
 
-    <div id="main-content" style="display: none;">
-        <header>
-            <nav>
-                <div class="logo">
-                    <img src="img/logo.png" alt="Logo Escuela Isaías 29:18" class="logo-img">
+    <div id="main-content" class="main-content" style="display: none;">
+        <header class="header">
+            <nav class="header__nav">
+                <div class="header__logo">
+                    <img src="./images/logo.png" alt="Logo Escuela Isaías 29:18" class="header__logo-img">
                 </div>
-                <div class="menu-toggle">☰</div>
-                <ul class="nav-links">
-                    <li><a href="index.html" class="active">Inicio</a></li>
-                    <li><a href="secretaria.html">Secretaría</a></li>
-                    <li><a href="docentes.html" class="active">Docentes</a></li>
-                    <li><a href="supervisores.html">Supervisores</a></li>
-                    <li><a href="direccion.html">Dirección</a></li>
-                    <li><a href="informes.html">Informes</a></li>
-                    <li><a href="galeria.html">Galería</a></li>
-                    <li><a href="ayuda.html">Ayuda</a></li>
+                <div class="header__menu-toggle">☰</div>
+                <ul class="header__nav-links">
+                    <li class="header__nav-item">
+                        <a href="index.html" class="header__nav-link">Inicio</a>
+                        <ul class="header__nav-sublinks">
+                            <li><a href="quienes-somos.html" class="header__nav-sublink">Quiénes Somos</a></li>
+                            <li><a href="servicios.html" class="header__nav-sublink">Nuestros Servicios</a></li>
+                            <li><a href="historia.html" class="header__nav-sublink">Breve Historia</a></li>
+                            <li><a href="staff.html" class="header__nav-sublink">Nuestro Staff</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="secretaria.html" class="header__nav-link">Secretaría</a></li>
+                    <li><a href="docentes.html" class="header__nav-link header__nav-link--active">Docentes</a></li>
+                    <li><a href="supervisores.html" class="header__nav-link">Supervisores</a></li>
+                    <li><a href="direccion.html" class="header__nav-link">Dirección</a></li>
+                    <li><a href="informes.html" class="header__nav-link">Informes</a></li>
+                    <li><a href="galeria.html" class="header__nav-link">Galería</a></li>
+                    <li><a href="ayuda.html" class="header__nav-link">Ayuda</a></li>
+                    <li><a href="dashboard.html" class="header__nav-link">Panel de Control</a></li>
                 </ul>
             </nav>
         </header>
-        <main>
+        <main class="main">
             <section class="hero">
-                <div class="hero-content">
-                    <h1>Docentes</h1>
-                    <p class="motto">Gestión de Calificaciones</p>
+                <div class="hero__content">
+                    <h1 class="hero__title">Docentes</h1>
+                    <p class="hero__motto">Gestión de Calificaciones y Revisión de Asistencias</p>
                 </div>
             </section>
             <section class="content">
-                <h2>Cargar Calificación</h2>
-                <form class="form">
-                    <div class="form-group">
-                        <label for="estudiante-calificacion">Estudiante:</label>
-                        <select id="estudiante-calificacion" name="estudiante-calificacion">
-                            <option value="">Seleccionar Estudiante</option>
-                            <option value="1">Juan Pérez</option>
-                            <option value="2">María López</option>
-                            <option value="3">Carlos Gómez</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="asignatura-calificacion">Asignatura:</label>
-                        <select id="asignatura-calificacion" name="asignatura-calificacion">
-                            <option value="">Seleccionar Asignatura</option>
-                            <option value="Matemáticas">Matemáticas</option>
-                            <option value="Lenguaje">Lenguaje</option>
-                            <option value="Ciencias">Ciencias</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="anio-calificacion">Año Escolar:</label>
-                        <select id="anio-calificacion" name="anio-calificacion">
-                            <option value="">Seleccionar Año</option>
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                            <option value="2025">2025</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="calificacion">Calificación (0-100):</label>
-                        <input type="number" id="calificacion" name="calificacion" min="0" max="100" placeholder="Ej. 85">
-                    </div>
-                    <div class="form-group">
-                        <label for="observacion">Observación:</label>
-                        <textarea id="observacion" name="observacion" placeholder="Ej. Excelente progreso" rows="3"></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Guardar Calificación</button>
-                </form>
+                <h2 class="content__title">Gestionar Calificaciones</h2>
+                <div class="form">
+                    <h3 class="form__title">Registrar/Editar Calificación</h3>
+                    <form id="grades-form">
+                        <div class="form__group">
+                            <label for="id-estudiante" class="form__group-label">Estudiante:</label>
+                            <select id="id-estudiante" name="id-estudiante" class="form__group-select" required>
+                                <option value="">Seleccionar Estudiante</option>
+                            </select>
+                        </div>
+                        <div class="form__group">
+                            <label for="id-asignatura" class="form__group-label">Asignatura:</label>
+                            <select id="id-asignatura" name="id-asignatura" class="form__group-select" required>
+                                <option value="">Seleccionar Asignatura</option>
+                            </select>
+                        </div>
+                        <div class="form__group">
+                            <label for="id-anio-escolar" class="form__group-label">Año Escolar:</label>
+                            <select id="id-anio-escolar" name="id-anio-escolar" class="form__group-select" required>
+                                <option value="">Seleccionar Año</option>
+                            </select>
+                        </div>
+                        <div class="form__group">
+                            <label for="calificacion" class="form__group-label">Calificación (0-100):</label>
+                            <input type="number" id="calificacion" name="calificacion" class="form__group-input" min="0" max="100" step="0.01" required>
+                        </div>
+                        <div class="form__group">
+                            <label for="observacion" class="form__group-label">Observación:</label>
+                            <textarea id="observacion" name="observacion" class="form__group-textarea" maxlength="100" placeholder="Ej. Excelente progreso" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="form__submit-btn">Guardar Calificación</button>
+                    </form>
+                </div>
 
-                <h2>Vista Previa de Calificaciones</h2>
-                <table class="table">
+                <h2 class="content__title">Vista de Calificaciones y Asistencias</h2>
+                <div class="form__group">
+                    <label for="filter-student" class="form__group-label">Filtrar por Estudiante:</label>
+                    <select id="filter-student" class="form__group-select">
+                        <option value="">Todos los estudiantes</option>
+                    </select>
+                </div>
+                <div class="form__group">
+                    <label for="search-grade" class="form__group-label">Buscar Calificación:</label>
+                    <input type="text" id="search-grade" class="form__group-input" placeholder="Nombre del estudiante o asignatura">
+                </div>
+                <table id="grades-table" class="table">
                     <thead>
                         <tr>
-                            <th>Estudiante</th>
-                            <th>Asignatura</th>
-                            <th>Año</th>
-                            <th>Calificación</th>
-                            <th>Observación</th>
+                            <th class="table__th">Estudiante</th>
+                            <th class="table__th">Asignatura</th>
+                            <th class="table__th">Año</th>
+                            <th class="table__th">Calificación</th>
+                            <th class="table__th">Observación</th>
+                            <th class="table__th">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody></tbody>
+                </table>
+
+                <h2 class="content__title">Asistencias</h2>
+                <div class="form__group">
+                    <label for="search-attendance" class="form__group-label">Buscar Asistencia:</label>
+                    <input type="text" id="search-attendance" class="form__group-input" placeholder="Nombre del estudiante">
+                </div>
+                <table id="attendance-table" class="table">
+                    <thead>
                         <tr>
-                            <td>Juan Pérez</td>
-                            <td>Matemáticas</td>
-                            <td>2024</td>
-                            <td>90</td>
-                            <td>Excelente</td>
+                            <th class="table__th">Estudiante</th>
+                            <th class="table__th">Año Escolar</th>
+                            <th class="table__th">Fecha</th>
+                            <th class="table__th">Estado</th>
                         </tr>
-                        <tr>
-                            <td>María López</td>
-                            <td>Lenguaje</td>
-                            <td>2024</td>
-                            <td>85</td>
-                            <td>Muy bien</td>
-                        </tr>
-                        <tr>
-                            <td>Carlos Gómez</td>
-                            <td>Ciencias</td>
-                            <td>2023</td>
-                            <td>70</td>
-                            <td>Debe mejorar</td>
-                        </tr>
-                    </tbody>
+                    </thead>
+                    <tbody></tbody>
                 </table>
             </section>
         </main>
-        <footer>
-            <p>© 2025 Escuela Cristiana de Sordos Isaías 29:18. Hecho con amor e inclusión (Grupo PANDIS).</p>
+        <footer class="footer">
+            <p class="footer__text">© 2025 Escuela Cristiana de Sordos Isaías 29:18.</p>
         </footer>
     </div>
-
-    <script>
-        // Contraseña (simulada)
-        const correctPassword = "docentes456"; // Cambia esta contraseña según desees
-
-        function checkPassword() {
-            const passwordInput = document.getElementById("password-input").value;
-            const errorMessage = document.getElementById("error-message");
-            const passwordPrompt = document.getElementById("password-prompt");
-            const mainContent = document.getElementById("main-content");
-
-            if (passwordInput === correctPassword) {
-                passwordPrompt.style.display = "none";
-                mainContent.style.display = "block";
-            } else {
-                errorMessage.style.display = "block";
-                document.getElementById("password-input").value = "";
-            }
-        }
-
-        // Permitir ingreso con Enter
-        document.getElementById("password-input").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                checkPassword();
-            }
-        });
-
-        // Menú hamburguesa
-        document.querySelector('.menu-toggle').addEventListener('click', () => {
-            document.querySelector('.nav-links').classList.toggle('active');
-        });
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="./jsECS/main.js"></script>
 </body>
 </html>
